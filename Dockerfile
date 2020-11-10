@@ -18,3 +18,26 @@ RUN \
   cd && \
   rm -r /working/ && \
   sbt sbtVersion
+
+# Install "https"
+RUN \
+  apt-get install -y \
+  apt-transport-https
+
+# Install curl and other stuff
+RUN \
+  apt-get install -y \
+  ca-certificates \
+  curl \
+  gnupg-agent \
+  software-properties-common
+
+# Install docker
+RUN \
+  curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+  add-apt-repository \
+  "deb [arch=amd64] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) \
+  stable" && \
+  apt-get update && \
+  apt-get install -y docker-ce docker-ce-cli containerd.io
